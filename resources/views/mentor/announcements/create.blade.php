@@ -3,68 +3,94 @@
 @section('title', 'Buat Pengumuman - SPARK')
 
 @section('content')
-<div class="py-12">
-    <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-            <div class="p-6">
-                <div class="flex items-center justify-between mb-6">
-                    <h1 class="text-2xl font-bold text-gray-900">📢 Buat Pengumuman Baru</h1>
-                    <a href="{{ route('mentor.announcements.index') }}" class="text-gray-600 hover:text-gray-900">← Kembali</a>
+<div class="py-8 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
+    
+    <div class="card-spark">
+        <div class="card-spark-header flex items-center justify-between">
+            <h1 class="text-xl font-bold text-gray-900">
+                <i class="fas fa-pen-fancy text-primary mr-2"></i>
+                Buat Pengumuman Baru
+            </h1>
+            <a href="{{ route('mentor.announcements.index') }}" 
+               class="text-gray-500 hover:text-gray-700 transition">
+                <i class="fas fa-arrow-left mr-1"></i>
+                Kembali
+            </a>
+        </div>
+        
+        <div class="card-spark-body">
+            <form action="{{ route('mentor.announcements.store') }}" method="POST">
+                @csrf
+                
+                <div class="mb-4">
+                    <label for="title" class="block text-sm font-medium text-gray-700 mb-1">
+                        <i class="fas fa-heading text-primary mr-1"></i>
+                        Judul Pengumuman *
+                    </label>
+                    <input type="text" name="title" id="title" value="{{ old('title') }}" 
+                           placeholder="Contoh: Informasi PKKMB Hari Pertama"
+                           class="w-full border border-gray-200 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition @error('title') border-red-500 @enderror"
+                           required>
+                    @error('title')
+                        <p class="text-red-500 text-sm mt-1"><i class="fas fa-exclamation-circle mr-1"></i>{{ $message }}</p>
+                    @enderror
                 </div>
                 
-                <form action="{{ route('mentor.announcements.store') }}" method="POST">
-                    @csrf
-                    
-                    <div class="mb-4">
-                        <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Judul Pengumuman *</label>
-                        <input type="text" name="title" id="title" value="{{ old('title') }}" 
-                               placeholder="Contoh: Informasi PKKMB Hari Pertama"
-                               class="w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 @error('title') border-red-500 @enderror"
-                               required>
-                        @error('title')
-                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    
-                    <div class="mb-4">
-                        <label for="group_id" class="block text-sm font-medium text-gray-700 mb-1">Kelompok Tujuan *</label>
-                        <select name="group_id" id="group_id" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 @error('group_id') border-red-500 @enderror" required>
-                            <option value="">Pilih Kelompok</option>
-                            @foreach($groups as $group)
-                                <option value="{{ $group->id }}" {{ old('group_id') == $group->id ? 'selected' : '' }}>
-                                    {{ $group->name }} ({{ $group->code }})
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('group_id')
-                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    
-                    <div class="mb-4">
-                        <label for="content" class="block text-sm font-medium text-gray-700 mb-1">Isi Pengumuman *</label>
-                        <textarea name="content" id="content" rows="6" 
-                                  placeholder="Tulis isi pengumuman di sini..."
-                                  class="w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 @error('content') border-red-500 @enderror"
-                                  required>{{ old('content') }}</textarea>
-                        @error('content')
-                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    
-                    <div class="bg-yellow-50 p-4 rounded-lg mb-4">
-                        <p class="text-sm text-yellow-800">
-                            💡 <strong>Tips:</strong> Pengumuman akan langsung terlihat oleh mahasiswa di kelompok yang dipilih.
-                        </p>
-                    </div>
-                    
-                    <div class="flex justify-end space-x-3 mt-6">
-                        <a href="{{ route('mentor.announcements.index') }}" class="px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-50">Batal</a>
-                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Publikasikan</button>
-                    </div>
-                </form>
-            </div>
+                <div class="mb-4">
+                    <label for="group_id" class="block text-sm font-medium text-gray-700 mb-1">
+                        <i class="fas fa-layer-group text-accent mr-1"></i>
+                        Kelompok Tujuan *
+                    </label>
+                    <select name="group_id" id="group_id" 
+                            class="w-full border border-gray-200 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition @error('group_id') border-red-500 @enderror"
+                            required>
+                        <option value="">Pilih Kelompok</option>
+                        @foreach($groups as $group)
+                            <option value="{{ $group->id }}" {{ old('group_id') == $group->id ? 'selected' : '' }}>
+                                {{ $group->name }} ({{ $group->code }})
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('group_id')
+                        <p class="text-red-500 text-sm mt-1"><i class="fas fa-exclamation-circle mr-1"></i>{{ $message }}</p>
+                    @enderror
+                </div>
+                
+                <div class="mb-4">
+                    <label for="content" class="block text-sm font-medium text-gray-700 mb-1">
+                        <i class="fas fa-align-left text-primary mr-1"></i>
+                        Isi Pengumuman *
+                    </label>
+                    <textarea name="content" id="content" rows="6" 
+                              placeholder="Tulis isi pengumuman di sini..."
+                              class="w-full border border-gray-200 rounded-lg px-4 py-2.5 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition @error('content') border-red-500 @enderror"
+                              required>{{ old('content') }}</textarea>
+                    @error('content')
+                        <p class="text-red-500 text-sm mt-1"><i class="fas fa-exclamation-circle mr-1"></i>{{ $message }}</p>
+                    @enderror
+                </div>
+                
+                <!-- 🔵 PERUBAHAN: Tips dengan warna baru -->
+                <div class="bg-accent-light/10 border border-accent/20 rounded-xl p-4 mb-4">
+                    <p class="text-sm text-accent flex items-start gap-2">
+                        <i class="fas fa-lightbulb text-accent mt-0.5"></i>
+                        <span><strong>Tips:</strong> Pengumuman akan langsung terlihat oleh mahasiswa di kelompok yang dipilih.</span>
+                    </p>
+                </div>
+                
+                <div class="flex justify-end gap-3 mt-6">
+                    <a href="{{ route('mentor.announcements.index') }}" 
+                       class="btn-spark btn-spark-ghost">
+                        Batal
+                    </a>
+                    <button type="submit" class="btn-spark btn-spark-primary">
+                        <i class="fas fa-paper-plane"></i>
+                        Publikasikan
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
+    
 </div>
 @endsection

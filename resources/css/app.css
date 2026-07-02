@@ -1,3 +1,108 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ============================================
+   CUSTOM FONT - Battlesbridge
+   ============================================ */
+@font-face {
+    font-family: 'Battlesbridge';
+    src: url('/fonts/BattlesbridgeDemo-AL126.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ============================================
+   CUSTOM COMPONENTS
+   ============================================ */
+@layer components {
+    .card-spark {
+        @apply bg-white rounded-2xl transition-all duration-300;
+        border: 1px solid rgba(6, 140, 230, 0.08);
+        box-shadow: 0 4px 20px rgba(6, 140, 230, 0.10);
+    }
+    
+    .card-spark:hover {
+        box-shadow: 0 8px 30px rgba(6, 140, 230, 0.18);
+    }
+    
+    .card-spark-header {
+        @apply px-6 py-4 border-b;
+        border-color: rgba(6, 140, 230, 0.08);
+    }
+    
+    .card-spark-body {
+        @apply px-6 py-5;
+    }
+    
+    .card-spark-hover {
+        @apply hover:border-primary/20 transition-all duration-300;
+    }
+    
+    .card-spark-hover:hover {
+        box-shadow: 0 8px 30px rgba(6, 140, 230, 0.18);
+    }
+    
+    .progress-spark {
+        @apply w-full bg-gray-100 rounded-full h-3 overflow-hidden;
+    }
+    
+    .progress-spark-bar {
+        @apply h-full rounded-full transition-all duration-700 ease-out;
+        background: linear-gradient(90deg, #068CE6 0%, #27B1FE 50%, #64D5E5 100%);
+    }
+    
+    .badge-spark {
+        @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium;
+    }
+    
+    .badge-spark-primary {
+        @apply bg-primary/10 text-primary;
+    }
+    
+    .badge-spark-accent {
+        @apply bg-accent/10 text-accent;
+    }
+    
+    .badge-spark-success {
+        @apply bg-emerald-100 text-emerald-700;
+    }
+    
+    .badge-spark-danger {
+        @apply bg-red-100 text-red-700;
+    }
+    
+    .btn-spark {
+        @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200;
+    }
+    
+    .btn-spark-primary {
+        @apply bg-primary hover:bg-primary-hover text-white shadow-sm hover:shadow-md;
+    }
+    
+    .btn-spark-outline {
+        @apply border border-primary/30 text-primary hover:bg-primary/5;
+    }
+    
+    .btn-spark-success {
+        @apply bg-accent hover:bg-accent-dark text-white shadow-sm hover:shadow-md;
+    }
+    
+    .btn-spark-ghost {
+        @apply text-gray-600 hover:bg-gray-100;
+    }
+}
+
+@layer utilities {
+    .bg-gradient-spark {
+        background: linear-gradient(135deg, #068CE6 0%, #27B1FE 50%, #008CA9 100%);
+    }
+    
+    .text-gradient-spark {
+        background: linear-gradient(135deg, #068CE6, #27B1FE);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+}
